@@ -7,8 +7,8 @@ const balances = dataset.bankBalances
   assign the resulting new array to `hundredThousandairs`
 */
 var hundredThousandairs = balances.filter(function (element) {
-    return element.amount > 100000
-  
+  return element.amount > 100000
+
 });
 
 /*
@@ -64,7 +64,7 @@ var datasetWithRoundedDime = balances.map(function (element) {
 })
 
 // set sumOfBankBalances to be the sum of all value held at `amount` for each bank object
-var sumOfBankBalances = balances.reduce(function (prev, curr){
+var sumOfBankBalances = balances.reduce(function (prev, curr) {
   prev += parseFloat(curr.amount);
   return Math.round(prev * 100) / 100
 }, 0)
@@ -80,21 +80,20 @@ var sumOfBankBalances = balances.reduce(function (prev, curr){
   take each `amount` and add 18.9% interest to it rounded to the nearest cent
   and then sum it all up into one value saved to `sumOfInterests`
  */
-let arr = [];
-var sumOfInterests = balances.filter(function (element){
+let sum = 0;
+var sumOfInterests = balances.filter(function (element) {
   return element.state === 'WI' || element.state === 'IL' || element.state === 'WY' || element.state === 'OH' || element.state === 'GA' || element.state === 'DE'
-  }).forEach(function (state){
-    let result = Object.assign({}, state)
-    result.amount = parseFloat(result.amount * 1.0189)
-    result.amount = Math.round(result.amount * 100)/100
-    arr.push(result)
-    console.log(arr)
-    return arr
-  }).reduce(function (prev, curr){
-    prev += (curr.amount);
-    return prev
-  }, 0)
+}).reduce(function (prev, curr) {
+  prev += parseFloat(curr.amount) * 0.189;
+  return parseFloat(prev.toFixed(2))
+}, 0);
+console.log(sumOfInterests);
 
+
+// sumOfInterests.forEach(function (state){
+//   sum += state.amount * 0.189;
+
+// })
 
 /*
   aggregate the sum of bankBalance amounts
